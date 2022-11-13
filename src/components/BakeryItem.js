@@ -1,18 +1,14 @@
 import { useState } from 'react';
 
+const formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+});
+
 function BakeryItem({ item, index, setCart }) {
   return (
     <div
       className="bakery-item"
-      style={{
-        cursor: 'pointer',
-        backgroundColor: '#eee',
-        borderRadius: '1rem',
-        display: 'flex',
-        gap: '1rem',
-        alignItems: 'center',
-        overflow: 'hidden',
-      }}
       onClick={() =>
         setCart((prev) => {
           const quantity = prev[index] ?? 0;
@@ -20,8 +16,9 @@ function BakeryItem({ item, index, setCart }) {
         })
       }
     >
-      <img src={item.image} style={{ width: '5rem' }} />
-      {item.name}
+      <img src={item.image} style={{ width: '5rem' }} alt={item.name} />
+      <span>{item.name}</span>
+      <span>{formatter.format(item.price)}</span>
     </div>
   );
 }
